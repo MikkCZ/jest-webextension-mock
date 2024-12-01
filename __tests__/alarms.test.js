@@ -47,7 +47,7 @@ describe('browser.alarms', () => {
 
     const alarm = await browser.alarms.get();
 
-    expectIntegerCloseTo(alarm.scheduledTime, Date.now() + (4 * 60 * 1000), 2000);
+    expectIntegerCloseTo(alarm.scheduledTime, Date.now() + 4 * 60 * 1000, 2000);
     expect(alarm.periodInMinutes).toBeUndefined();
   });
 
@@ -56,7 +56,7 @@ describe('browser.alarms', () => {
 
     const alarm = await browser.alarms.get();
 
-    expectIntegerCloseTo(alarm.scheduledTime, Date.now() + (4 * 60 * 1000), 2000);
+    expectIntegerCloseTo(alarm.scheduledTime, Date.now() + 4 * 60 * 1000, 2000);
     expect(alarm.periodInMinutes).toBe(4);
   });
 
@@ -158,7 +158,6 @@ describe('browser.alarms', () => {
 
   test('clear promise default', async () => {
     browser.alarms.create({ when: 123 });
-    const callback = jest.fn();
 
     const result = await browser.alarms.clear();
 
