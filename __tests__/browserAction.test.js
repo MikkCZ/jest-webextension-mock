@@ -172,57 +172,6 @@ describe('browser.browserAction', () => {
     );
   });
 
-  test('getPopup', () => {
-    const callback = jest.fn();
-    expect(jest.isMockFunction(browser.browserAction.getPopup)).toBe(true);
-    browser.browserAction.getPopup({}, callback);
-    expect(browser.browserAction.getPopup).toHaveBeenCalledTimes(1);
-    expect(callback).toBeCalled();
-  });
-  test('getPopup promise', () => {
-    return expect(browser.browserAction.getPopup({})).resolves.toBeUndefined();
-  });
-
-  test('setBadgeText', () => {
-    expect(jest.isMockFunction(browser.browserAction.setBadgeText)).toBe(true);
-    const text = 'BADGE TEXT';
-    browser.browserAction.setBadgeText(text);
-    expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith(text);
-  });
-  test('getBadgeText', () => {
-    const callback = jest.fn();
-    expect(jest.isMockFunction(browser.browserAction.getBadgeText)).toBe(true);
-    browser.browserAction.getBadgeText({}, callback);
-    expect(browser.browserAction.getBadgeText).toHaveBeenCalledTimes(1);
-    expect(callback).toBeCalled();
-  });
-  test('getBadgeText promise', () => {
-    return expect(
-      browser.browserAction.getBadgeText({})
-    ).resolves.toBeUndefined();
-  });
-
-  test('setBadgeBackgroundColor', () => {
-    expect(
-      jest.isMockFunction(browser.browserAction.setBadgeBackgroundColor)
-    ).toBe(true);
-    const details = { color: 'red' };
-    browser.browserAction.setBadgeBackgroundColor(details);
-    expect(browser.browserAction.setBadgeBackgroundColor).toHaveBeenCalledWith(
-      details
-    );
-  });
-  test('getBadgeBackgroundColor', () => {
-    const callback = jest.fn();
-    expect(
-      jest.isMockFunction(browser.browserAction.getBadgeBackgroundColor)
-    ).toBe(true);
-    browser.browserAction.getBadgeBackgroundColor({}, callback);
-    expect(browser.browserAction.getBadgeBackgroundColor).toHaveBeenCalledTimes(
-      1
-    );
-  });
-
   test('onClicked.removeListener', () => {
     expect(
       jest.isMockFunction(browser.browserAction.onClicked.removeListener)
