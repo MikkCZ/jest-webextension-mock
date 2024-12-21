@@ -1,5 +1,17 @@
 # jest-webextension-mock
 
+## 4.0.0
+
+### Major Changes
+
+- b8594f9: Drop support for node 14 and 16, add support for node 18 and 22
+
+## 3.9.1
+
+### Patch Changes
+
+- Fix storage returning undefined for unknown keys
+
 ## 3.9.0
 
 ### Minor Changes

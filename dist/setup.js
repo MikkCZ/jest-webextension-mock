@@ -1,47 +1,104 @@
 'use strict';
 
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    enumerableOnly && (symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    })), keys.push.apply(keys, symbols);
-  }
-  return keys;
+function _arrayLikeToArray(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
 }
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = null != arguments[i] ? arguments[i] : {};
-    i % 2 ? ownKeys(Object(source), !0).forEach(function (key) {
-      _defineProperty(target, key, source[key]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) {
-      Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+function _arrayWithHoles(r) {
+  if (Array.isArray(r)) return r;
+}
+function _defineProperty(e, r, t) {
+  return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+    value: t,
+    enumerable: !0,
+    configurable: !0,
+    writable: !0
+  }) : e[r] = t, e;
+}
+function _iterableToArrayLimit(r, l) {
+  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (null != t) {
+    var e,
+      n,
+      i,
+      u,
+      a = [],
+      f = !0,
+      o = !1;
+    try {
+      if (i = (t = t.call(r)).next, 0 === l) {
+        if (Object(t) !== t) return;
+        f = !1;
+      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+    } catch (r) {
+      o = !0, n = r;
+    } finally {
+      try {
+        if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
+      } finally {
+        if (o) throw n;
+      }
+    }
+    return a;
+  }
+}
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function ownKeys(e, r) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r && (o = o.filter(function (r) {
+      return Object.getOwnPropertyDescriptor(e, r).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread2(e) {
+  for (var r = 1; r < arguments.length; r++) {
+    var t = null != arguments[r] ? arguments[r] : {};
+    r % 2 ? ownKeys(Object(t), !0).forEach(function (r) {
+      _defineProperty(e, r, t[r]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) {
+      Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
     });
   }
-  return target;
+  return e;
 }
-function _typeof(obj) {
+function _slicedToArray(r, e) {
+  return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
+}
+function _toPrimitive(t, r) {
+  if ("object" != typeof t || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r ? String : Number)(t);
+}
+function _toPropertyKey(t) {
+  var i = _toPrimitive(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
+function _typeof(o) {
   "@babel/helpers - typeof";
 
-  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
-    return typeof obj;
-  } : function (obj) {
-    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-  }, _typeof(obj);
+  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
+    return typeof o;
+  } : function (o) {
+    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+  }, _typeof(o);
 }
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
+function _unsupportedIterableToArray(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
   }
-  return obj;
 }
 
 var createEventListeners = function createEventListeners() {
@@ -372,196 +429,81 @@ var runtime = {
   })
 };
 
-var syncStore = {};
-var localStore = {};
-var managedStore = {};
 function resolveKey(key, store) {
   if (typeof key === 'string') {
-    var result = {};
-    result[key] = store[key];
-    return result;
+    if (key in store) {
+      return {
+        key: store[key]
+      };
+    } else {
+      return {};
+    }
   } else if (Array.isArray(key)) {
-    return key.reduce(function (acc, curr) {
-      acc[curr] = store[curr];
-      return acc;
+    return key.reduce(function (acc, currKey) {
+      return _objectSpread2(_objectSpread2({}, acc), resolveKey(currKey, store));
     }, {});
   } else if (_typeof(key) === 'object') {
-    return Object.keys(key).reduce(function (acc, curr) {
-      acc[curr] = store[curr] || key[curr];
-      return acc;
+    return Object.entries(key).reduce(function (acc, _ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+        currKey = _ref2[0],
+        fallbackValue = _ref2[1];
+      return _objectSpread2(_objectSpread2({}, acc), {}, _defineProperty({}, currKey, fallbackValue), resolveKey(currKey, store));
     }, {});
   }
   throw new Error('Wrong key given');
 }
+function mockStore() {
+  var store = {};
+  return {
+    get: jest.fn(function (id, cb) {
+      var result = id === null || id === undefined ? store : resolveKey(id, store);
+      if (cb !== undefined) {
+        return cb(result);
+      }
+      return Promise.resolve(result);
+    }),
+    getBytesInUse: jest.fn(function (id, cb) {
+      if (cb !== undefined) {
+        return cb(0);
+      }
+      return Promise.resolve(0);
+    }),
+    set: jest.fn(function (payload, cb) {
+      Object.keys(payload).forEach(function (key) {
+        return store[key] = payload[key];
+      });
+      if (cb !== undefined) {
+        return cb();
+      }
+      return Promise.resolve();
+    }),
+    remove: jest.fn(function (id, cb) {
+      var keys = typeof id === 'string' ? [id] : id;
+      keys.forEach(function (key) {
+        return delete store[key];
+      });
+      if (cb !== undefined) {
+        return cb();
+      }
+      return Promise.resolve();
+    }),
+    clear: jest.fn(function (cb) {
+      Object.keys(store).forEach(function (key) {
+        return delete store[key];
+      });
+      if (cb !== undefined) {
+        return cb();
+      }
+      return Promise.resolve();
+    }),
+    onChanged: createEventListeners()
+  };
+}
 var storage = {
-  sync: {
-    get: jest.fn(function (id, cb) {
-      var result = id === null || id === undefined ? syncStore : resolveKey(id, syncStore);
-      if (cb !== undefined) {
-        return cb(result);
-      }
-      return Promise.resolve(result);
-    }),
-    getBytesInUse: jest.fn(function (id, cb) {
-      if (cb !== undefined) {
-        return cb(0);
-      }
-      return Promise.resolve(0);
-    }),
-    set: jest.fn(function (payload, cb) {
-      Object.keys(payload).forEach(function (key) {
-        return syncStore[key] = payload[key];
-      });
-      if (cb !== undefined) {
-        return cb();
-      }
-      return Promise.resolve();
-    }),
-    remove: jest.fn(function (id, cb) {
-      var keys = typeof id === 'string' ? [id] : id;
-      keys.forEach(function (key) {
-        return delete syncStore[key];
-      });
-      if (cb !== undefined) {
-        return cb();
-      }
-      return Promise.resolve();
-    }),
-    clear: jest.fn(function (cb) {
-      syncStore = {};
-      if (cb !== undefined) {
-        return cb();
-      }
-      return Promise.resolve();
-    }),
-    onChanged: createEventListeners()
-  },
-  local: {
-    get: jest.fn(function (id, cb) {
-      var result = id === null || id === undefined ? localStore : resolveKey(id, localStore);
-      if (cb !== undefined) {
-        return cb(result);
-      }
-      return Promise.resolve(result);
-    }),
-    getBytesInUse: jest.fn(function (id, cb) {
-      if (cb !== undefined) {
-        return cb(0);
-      }
-      return Promise.resolve(0);
-    }),
-    set: jest.fn(function (payload, cb) {
-      Object.keys(payload).forEach(function (key) {
-        return localStore[key] = payload[key];
-      });
-      if (cb !== undefined) {
-        return cb();
-      }
-      return Promise.resolve();
-    }),
-    remove: jest.fn(function (id, cb) {
-      var keys = typeof id === 'string' ? [id] : id;
-      keys.forEach(function (key) {
-        return delete localStore[key];
-      });
-      if (cb !== undefined) {
-        return cb();
-      }
-      return Promise.resolve();
-    }),
-    clear: jest.fn(function (cb) {
-      localStore = {};
-      if (cb !== undefined) {
-        return cb();
-      }
-      return Promise.resolve();
-    }),
-    onChanged: createEventListeners()
-  },
-  session: {
-    get: jest.fn(function (id, cb) {
-      var result = id === null || id === undefined ? localStore : resolveKey(id, localStore);
-      if (cb !== undefined) {
-        return cb(result);
-      }
-      return Promise.resolve(result);
-    }),
-    getBytesInUse: jest.fn(function (id, cb) {
-      if (cb !== undefined) {
-        return cb(0);
-      }
-      return Promise.resolve(0);
-    }),
-    set: jest.fn(function (payload, cb) {
-      Object.keys(payload).forEach(function (key) {
-        return localStore[key] = payload[key];
-      });
-      if (cb !== undefined) {
-        return cb();
-      }
-      return Promise.resolve();
-    }),
-    remove: jest.fn(function (id, cb) {
-      var keys = typeof id === 'string' ? [id] : id;
-      keys.forEach(function (key) {
-        return delete localStore[key];
-      });
-      if (cb !== undefined) {
-        return cb();
-      }
-      return Promise.resolve();
-    }),
-    clear: jest.fn(function (cb) {
-      localStore = {};
-      if (cb !== undefined) {
-        return cb();
-      }
-      return Promise.resolve();
-    }),
-    onChanged: createEventListeners()
-  },
-  managed: {
-    get: jest.fn(function (id, cb) {
-      var result = id === null || id === undefined ? managedStore : resolveKey(id, managedStore);
-      if (cb !== undefined) {
-        return cb(result);
-      }
-      return Promise.resolve(result);
-    }),
-    getBytesInUse: jest.fn(function (id, cb) {
-      if (cb !== undefined) {
-        return cb(0);
-      }
-      return Promise.resolve(0);
-    }),
-    set: jest.fn(function (payload, cb) {
-      Object.keys(payload).forEach(function (key) {
-        return managedStore[key] = payload[key];
-      });
-      if (cb !== undefined) {
-        return cb();
-      }
-      return Promise.resolve();
-    }),
-    remove: jest.fn(function (id, cb) {
-      var keys = typeof id === 'string' ? [id] : id;
-      keys.forEach(function (key) {
-        return delete managedStore[key];
-      });
-      if (cb !== undefined) {
-        return cb();
-      }
-      return Promise.resolve();
-    }),
-    clear: jest.fn(function (cb) {
-      managedStore = {};
-      if (cb !== undefined) {
-        return cb();
-      }
-      return Promise.resolve();
-    }),
-    onChanged: createEventListeners()
-  },
+  sync: mockStore(),
+  local: mockStore(),
+  session: mockStore(),
+  managed: mockStore(),
   onChanged: createEventListeners()
 };
 
